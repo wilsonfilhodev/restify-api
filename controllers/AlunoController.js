@@ -1,16 +1,26 @@
+/**
+ * Model Schema
+ */
 const Aluno = require('../models/Aluno')
 
+
 module.exports = {
-    findAll(req, res) {
+
+    /**
+	 * LIST
+	 */
+    findAll(req, res, next) {
         Aluno.find({}).sort('name')
             .then(alunos => res.json(alunos))
-            .catch(error => {
-                res.status(500)
-                res.json({error})
-            })
+            .catch(error => res.send(500, error))
+
+            next()
     },
 
-    findById(req, res) {
+    /**
+	 * GET
+	 */
+    findById(req, res, next) {
         Aluno.findById(req.params.id)
             .then(aluno => {
                 if(aluno) res.json(aluno)
@@ -19,31 +29,64 @@ module.exports = {
                     res.json({message: 'Resource not found'})
                 }
             })
-            .catch(error => {
-                res.status(500)
-                res.json({error})
-            })
+            .catch(error => res.send(500, error))
+
+            next()  
     },
 
-    create(req, res) {
+    /**
+	 * POST
+	 */
+    create(req, res, next) {
         Aluno.create(req.body)
             .then(aluno => {
                 res.status(201)
                 res.json(aluno)
             })
-            .catch(error => {
-                res.status(500)
-                res.json({error})
-            })
+            .catch(error => res.send(500, error))
+
+            next()  
     },
 
+
+    /**
+	 * UPDATE
+	 */
+    async update(req, res, next) {
+        if(req.params.id) {
+            const aluno = await Aluno.findById(req.params.id)
+            if(!aluno) {
+                res.json({message: 'Resource not found'})
+            } else {
+                Aluno.findOneAndUpdate(req.params.id, req.body)
+                .then( _ => res.status(204))
+                .catch(error => res.send(500, error))
+        
+            }
+        } else {
+            res.send(400, {message: 'Parameter id is required'})
+        }
+        next()
+    },
+    
+
+    /**
+	 * DELETE
+	 */
     async delete(req, res, next) {
-        await Aluno.findByIdAndDelete(req.params.id)
-            .then( () => res.status(204))
-            .catch(error => {
-                res.status(500)
-                res.json({error})
-        })
+        if(req.params.id) {
+            const aluno = await Aluno.findById(req.params.id)
+            if(!aluno) {
+                res.json({message: 'Resource not found'})
+            } else {
+                Aluno.findOneAndDelete(req.params.id )
+                .then(_ => res.send(204))
+                .catch(error => res.send(500, error))
+        
+            }
+        } else {
+            res.send(400, {message: 'Parameter id is required'})
+        }
         next()
     }
     
