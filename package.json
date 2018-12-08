@@ -1,0 +1,13 @@
+{
+  "name": "api-restify",
+  "version": "1.0.0",
+  "description": "api criada com node.js e restify",
+  "main": "index.js",
+  "author": "wilson filho",
+  "license": "MIT",
+  "dependencies": {
+    "mongoose": "^5.3.15",
+    "restify": "^7.3.0",
+    "restify-router": "^0.5.1"
+  }
+}
