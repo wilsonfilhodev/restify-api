@@ -4,7 +4,7 @@ Example api rest using Node.js and Restify
 # Running the project
 
 ```
-$ git clone https://github.com/wilsonfilhodev/restify-api
+$ git clone https://github.com/wilsonfilhodev/restify-api.git
 $ cd restify-example
 $ npm install
 $ npm start
