@@ -10,7 +10,6 @@ const routerInstance = new  Router()
 const AlunoController = require('../controllers/AlunoController')
 
 
-
 routerInstance.get('/alunos', AlunoController.findAll);
 routerInstance.get('/alunos/:id', AlunoController.findById);
 routerInstance.post('/alunos', AlunoController.create);
