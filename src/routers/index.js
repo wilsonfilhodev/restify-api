@@ -1,4 +1,4 @@
-const alunoRouter = require('./routers/aluno.router')
+const alunoRouter = require('../routers/aluno.router')
 
 module.exports = function(server) {
 

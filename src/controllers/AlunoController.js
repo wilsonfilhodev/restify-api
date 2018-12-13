@@ -58,8 +58,8 @@ module.exports = {
             if(!aluno) {
                 res.json({message: 'Resource not found'})
             } else {
-                Aluno.findOneAndUpdate(req.params.id, req.body)
-                .then( _ => res.status(204))
+                Aluno.findOneAndUpdate(req.params.id, {...req.body}, {new: true})
+                .then( aluno => res.send(aluno))
                 .catch(error => res.send(500, error))
         
             }
